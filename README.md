@@ -12,9 +12,9 @@ Use the `./lookup-companies.sh` script to lookup all companies in the CRM
 ```
 
 ## Arguments
-Available Arguments:
 - `input`: (default="./crm.csv") Specify the name of the CSV input file.
-- `output`: (default="./output.txt) Specify the name of the OUTPUT file.
+- `output`: (default="./output.txt") Specify the name of the OUTPUT file.
+
 ```
 ./lookup-companies.sh input=crm.csv output=output.csv
 ```
