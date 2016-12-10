@@ -72,7 +72,7 @@ DEBUG="*" ./lookup-companies.sh 2> output.log
 ## Tests
 Unit Tests were not created in favor of addition additional functionality to the application.  However, several commands that were instramental during the development process are contained in an `examples.sh` file.
 
-A few examples are listed below:
+_A few examples are listed below:_
 ```
 # Matches 'Uber' and 'UberMedia'
 ./lookup-company-name.sh name="Uber"
