@@ -45,5 +45,5 @@ const lookupCompanyNameActivity = Activity('lookup-company-name', lookupCompanyN
 module.exports = (name, ignoreCase) => {
 
     // Call the lookup company name activity
-    return lookupCompanyNameActivity.run(name);
+    return lookupCompanyNameActivity.run(name, ignoreCase);
 };
