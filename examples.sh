@@ -38,3 +38,8 @@ cd $DIR
 # Matches 'CBOE': only checks corporate_names
 ./lookup-company-name.sh name="CBOE" match="corporate_names"
 
+# Matches Go daddy
+./lookup-company-url.sh url='godaddy.com'
+
+# Match Go Daddy: with 'http' prefix added.
+./lookup-company-url.sh url='http://in.godaddy.com'
