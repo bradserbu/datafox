@@ -18,6 +18,9 @@ const DB = require('./db.json');
  */
 function lookupCompanyName(name, ignoreCase, match) {
 
+    if (util.isNullOrUndefined(name))
+        throw Error('REQUIRED_ARG: "name" is a required argument.');
+
     // Argument Defaults
     ignoreCase = util.isNullOrUndefined(ignoreCase)
         ? DEFAULT_IGNORE_CASE
