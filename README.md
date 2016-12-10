@@ -43,11 +43,9 @@ Use the `./lookup-companies.sh` script to lookup all companies in the CRM
 ```
 ./lookup-companies.sh
 ```
-
-## Arguments
+### Arguments
 - `input`: (default="./crm.csv") Specify the name of the CSV input file.
 - `output`: (default="./output.txt") Specify the name of the OUTPUT file.
-
 ```
 ./lookup-companies.sh input=crm.csv output=output.csv
 ```
@@ -70,3 +68,8 @@ To capture the output log in a file, using the following syntax:
 ```
 DEBUG="*" ./lookup-companies.sh 2> output.log
 ```
+
+### Tests and Examples
+Unit Tests were not created in favor of addition additional functionality to the application.
+
+However, some commands that were used during the development process to test the various activites in the application are contained in an `examples.sh` file.
