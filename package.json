@@ -3,8 +3,7 @@
   "name": "datafox",
   "version": "1.0.0",
   "description": "DataFox Test Assignment",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/bradserbu/datafox.git"
@@ -15,6 +14,9 @@
   },
   "homepage": "https://github.com/bradserbu/datafox#readme",
   "dependencies": {
+    "dataprocess": "^2.0.8",
+    "fast-csv": "^2.3.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {}
 }
