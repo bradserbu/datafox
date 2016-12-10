@@ -65,7 +65,9 @@ function lookupCompanyName(name, ignoreCase, match) {
  * Create an Activity to lookup a company by name.
  * - An Activity provides statistics, debug information, global error handlers, automatically.
  */
-const lookupCompanyNameActivity = Activity('lookup-company-name', lookupCompanyName);
+const lookupCompanyNameActivity = Activity('lookup-company-name', lookupCompanyName, {
+    logArguments: true
+});
 
 /**
  * Export a function to search for a company by name

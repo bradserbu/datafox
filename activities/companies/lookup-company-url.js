@@ -46,7 +46,9 @@ function lookupCompanyUrl(url) {
  * Create an Activity to lookup a company by URL.
  * - An Activity provides statistics, debug information, global error handlers, automatically.
  */
-const lookupCompanyUrlActivity = Activity('lookup-company-url', lookupCompanyUrl);
+const lookupCompanyUrlActivity = Activity('lookup-company-url', lookupCompanyUrl, {
+    logArguments: true
+});
 
 /**
  * Export a function to search for a company by URL
