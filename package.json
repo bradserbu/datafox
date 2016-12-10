@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "name": "datafox",
+  "version": "1.0.0",
+  "description": "DataFox Test Assignment",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bradserbu/datafox.git"
+  },
+  "author": "Brad Serbu <bradserbu@bradserbu.com>",
+  "bugs": {
+    "url": "https://github.com/bradserbu/datafox/issues"
+  },
+  "homepage": "https://github.com/bradserbu/datafox#readme",
+  "dependencies": {
+  },
+  "devDependencies": {}
+}
