@@ -6,11 +6,13 @@ const DEFAULT_OUTPUT = './output.txt';
 
 // ** Dependencies
 const _ = require('underscore');
+const Q = require('bluebird');
 const util = require('util');
 const fs = require('fs');
 const csv = require('fast-csv');
 const DataProcess = require('dataprocess').DataProcess;
 const lookupCompanyName = require('./lookup-company-name.js');
+const lookupCompanyUrl = require('./lookup-company-url.js');
 
 /**
  * Create a readable stream from a CSV file
@@ -21,6 +23,17 @@ function createCSVStream(filename) {
     const filestream = fs.createReadStream(filename);
 
     return filestream.pipe(csv({headers: true}));
+}
+
+function lookupEntry(entry) {
+
+    const name = entry['Name'];
+    const url = entry['URL'];
+
+    return Q.all(
+        lookupCompanyName(name),
+        lookupCompanyUrl(url)
+    )
 }
 
 // ** Run the program
@@ -36,7 +49,7 @@ module.exports = (input, output) => {
 
     // Create DataProcess
     const process = DataProcess('match-companies')
-        .map('lookup-company', entry => lookupCompanyName(entry.Name))
+        .map('lookup-company', lookupEntry)
         .map('select-ids', matches => _.map(matches, _.property('id'))) // Select Just the IDS
         .map('join-ids', ids => ids.join(','))
         .map('output-results', results => output_stream.write(results + '\n'));
