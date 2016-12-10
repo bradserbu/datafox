@@ -24,7 +24,16 @@ To see additional debug information, set the `DEBUG` environment variable to tru
 ```
 export DEBUG="*"
 ```
-or using the inline syntax
+
+or using the inline syntax:
 ```
 DEBUG="*" ./lookup-companies.sh input=crm.csv output=output.csv
+```
+
+### Logging
+All logging information is written to `STDERR`.
+
+To capture the output log in a file, using the following syntax:
+```
+DEBUG="*" ./lookup-companies.sh 2> output.log
 ```

@@ -18,24 +18,6 @@ const DB = require('./db.json');
  */
 function lookupCompanyName(name, ignoreCase, match) {
 
-    if (util.isNullOrUndefined(name))
-        throw Error('REQUIRED_ARG: "name" is a required argument.');
-
-    // Argument Defaults
-    ignoreCase = util.isNullOrUndefined(ignoreCase)
-        ? DEFAULT_IGNORE_CASE
-        : util.isString(ignoreCase)
-        ? ignoreCase !== 'false'
-        : ignoreCase;
-
-    match = util.isNullOrUndefined(match)
-        ? DEFAULT_MATCH
-        : util.isArray(match)
-        ? match
-        : util.isString(match)
-        ? match.split(',')
-        : DEFAULT_MATCH;
-
     // Build a Regular Expression to search for name
     const regex = new RegExp(name, ignoreCase ? 'i' : '');
 
@@ -76,6 +58,24 @@ const lookupCompanyNameActivity = Activity('lookup-company-name', lookupCompanyN
  * @returns {*}
  */
 module.exports = (name, ignoreCase, match) => {
+
+    if (util.isNullOrUndefined(name))
+        throw Error('REQUIRED_ARG: "name" is a required argument.');
+
+    // Argument Defaults
+    ignoreCase = util.isNullOrUndefined(ignoreCase)
+        ? DEFAULT_IGNORE_CASE
+        : util.isString(ignoreCase)
+        ? ignoreCase !== 'false'
+        : ignoreCase;
+
+    match = util.isNullOrUndefined(match)
+        ? DEFAULT_MATCH
+        : util.isArray(match)
+        ? match
+        : util.isString(match)
+        ? match.split(',')
+        : DEFAULT_MATCH;
 
     // Call the lookup company name activity
     return lookupCompanyNameActivity.run(name, ignoreCase, match);

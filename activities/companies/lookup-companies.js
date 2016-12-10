@@ -25,17 +25,6 @@ function createCSVStream(filename) {
     return filestream.pipe(csv({headers: true}));
 }
 
-function lookupEntry(entry) {
-
-    const name = entry['Name'];
-    const url = entry['URL'];
-
-    return Q.all(
-        lookupCompanyName(name),
-        lookupCompanyUrl(url)
-    )
-}
-
 // ** Run the program
 module.exports = (input, output) => {
 
@@ -49,7 +38,10 @@ module.exports = (input, output) => {
 
     // Create DataProcess
     const process = DataProcess('match-companies')
-        .map('lookup-company', lookupEntry)
+        .map('lookup-company', entry => Q.all(
+            lookupCompanyName(entry['Name']),
+            lookupCompanyUrl(entry['URL'])
+        ))
         .map('select-ids', matches => _.map(matches, _.property('id'))) // Select Just the IDS
         .map('join-ids', ids => ids.join(','))
         .map('output-results', results => output_stream.write(results + '\n'));

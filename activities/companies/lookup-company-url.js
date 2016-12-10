@@ -17,22 +17,22 @@ const DB = require('./db.json');
  */
 function lookupCompanyUrl(url) {
 
-    // console.error('URL', url);
+    if (util.isNullOrUndefined(url))
+        throw Error('REQUIRED_ARG: "url" is a required argument.');
 
-    // Function to check if any of the match properties contain the company name
-    // const matchCompany = company => _.any(company[URLS_PROPERTY],
-    //     compare => util.isNullOrUndefined(compare) === false && new RegExp(url, 'i').test(compare)
-    // );
-    // const matchCompany = company => company[URLS_PROPERTY].indexOf(url) !== -1;
-
+    // Function to match URL and capture errors thrown from the 'compare-urls' library
     const matchURL = compare => {
-
         try {
             return compareUrls(url, compare);
         } catch (err) {
         }
     };
 
+    // Function to check if any of the match properties contain the company name
+    // const matchCompany = company => _.any(company[URLS_PROPERTY],
+    //     compare => util.isNullOrUndefined(compare) === false && new RegExp(url, 'i').test(compare)
+    // );
+    // const matchCompany = company => company[URLS_PROPERTY].indexOf(url) !== -1;
     const matchCompany = company => _.any(company[URLS_PROPERTY], matchURL);
 
     // Search Database for any matching companies
@@ -57,9 +57,6 @@ const lookupCompanyUrlActivity = Activity('lookup-company-url', lookupCompanyUrl
  * @returns {*}
  */
 module.exports = (url) => {
-
-    if (util.isNullOrUndefined(url))
-        throw Error('REQUIRED_ARG: "url" is a required argument.');
 
     // Call the lookup company name activity
     return lookupCompanyUrlActivity.run(url);
