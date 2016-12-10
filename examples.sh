@@ -25,3 +25,16 @@ cd $DIR
 
 # Match Words Only
 ./lookup-company-name.sh name="Inc"
+
+# Matches 'CBOE': matches 'Options' in corporate_names
+./lookup-company-name.sh name="Options"
+
+# Matches 'CBOE': Same as defaults above
+./lookup-company-name.sh name="Options" match="name,corporate_names"
+
+# No Matches:  CBOE only has 'Options' in the corporate_names field
+./lookup-company-name.sh name="Options" match="name"
+
+# Matches 'CBOE': only checks corporate_names
+./lookup-company-name.sh name="CBOE" match="corporate_names"
+
