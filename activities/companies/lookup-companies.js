@@ -34,7 +34,7 @@ module.exports = (input, output) => {
 
     // Open an output file stream
     const output_stream = fs.createWriteStream(output);
-    output_stream.write('Matches:\n');
+    output_stream.write('Matches\n');
 
     // Create DataProcess
     const process = DataProcess('match-companies')
