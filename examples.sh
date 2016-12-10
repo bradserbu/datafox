@@ -22,3 +22,6 @@ cd $DIR
 
 # Matches 'UberMedia'
 ./lookup-company-name.sh name="UberM"
+
+# Match Words Only
+./lookup-company-name.sh name="Inc"
