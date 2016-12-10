@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "DataFox Test Assignment",
   "scripts": {},
+  "main": "app.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/bradserbu/datafox.git"
