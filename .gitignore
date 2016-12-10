@@ -1,6 +1,9 @@
 # WebStorm ide settings
 .idea
 
+# Output Text File output.txt
+output.txt
+
 # Logs
 logs
 *.log
