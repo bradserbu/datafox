@@ -3,12 +3,51 @@
 // ** Constants
 const DEFAULT_IGNORE_CASE = true;
 const DEFAULT_MATCH = ['name', 'corporate_names'];
+const DEFAULT_STOPWORDS = [
+    /\bthe\b/ig,
+    /\bllc\b/ig, /l.l.c./ig,
+    /\bcorporation\b/ig, /\bcorp\b/ig,
+    /\binc\b/ig, /\bIncorporated\b/ig
+];
 
 // ** Dependencies
 const _ = require('underscore');
 const util = require('util');
 const Activity = require('dataprocess').Activity;
 const DB = require('./db.json');
+
+/**
+ * Remove all instances of quotations in a string
+ * @param text
+ * @returns {void|XML|string|*}
+ */
+function trimQuotes(text) {
+    return util.isString(text) ? text.replace(/['"]+/g, '') : text;
+}
+
+/**
+ * Splits text into it's word components
+ * @param text
+ * @returns {Array|{index: number, input: string}|*}
+ */
+function words (text) {
+    return text.match(/\w*\w/g).join(' ');
+}
+
+/**
+ * Remove Stop Words
+ * @param text
+ * @param stopWords
+ * @returns {*}
+ */
+function removeStopWords(text, stopWords) {
+
+    stopWords = stopWords || DEFAULT_STOPWORDS;
+
+    stopWords.forEach(word => text = text.replace(word, ''));
+
+    return text;
+}
 
 /**
  * Search the DataFox Companies Database for a specified company name.
@@ -18,19 +57,22 @@ const DB = require('./db.json');
  */
 function lookupCompanyName(name, ignoreCase, match) {
 
+    // Trim quotes from search term
+    name = trimQuotes(name);
+
+    // Remove Stop Words
+    name = removeStopWords(name);
+
     // Build a Regular Expression to search for name
-    const regex = new RegExp(name, ignoreCase ? 'i' : '');
+    const regex = new RegExp(words(name), ignoreCase ? 'i' : '');
 
     // Function to test if a string matches the name regex
-    const matchName = name => util.isString(name) && regex.test(name);
-
-    // Function to split name into words
-    const words = text => text.match(/\w*\w/g);
+    const matchName = text => util.isString(text) && regex.test(words(removeStopWords(text)));
 
     // Function to check if a company property matches the company name
     const matchProperty = (company, property) =>
         util.isArray(company[property])
-            ? _.find(company[property], matchName(name))
+            ? _.any(company[property], matchName)
             : matchName(company[property]);
 
     // Function to check if any of the match properties contain the company name
