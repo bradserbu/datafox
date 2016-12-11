@@ -3,6 +3,12 @@
 // ** Constants
 const DEFAULT_IGNORE_CASE = true;
 const DEFAULT_MATCH = ['name', 'corporate_names'];
+const DEFAULT_STOPWORDS = [
+    /\bthe\b/ig,
+    /\bllc\b/ig, /l.l.c./ig,
+    /\bcorporation\b/ig, /\bcorp\b/ig,
+    /\binc\b/ig, /\bIncorporated\b/ig
+];
 
 // ** Dependencies
 const _ = require('underscore');
@@ -17,6 +23,23 @@ const trimQuotes = text => util.isString(text) ? text.replace(/['"]+/g, '') : te
 const words = text => text.match(/\w*\w/g);
 
 /**
+ * Remove Stop Words
+ * @param text
+ * @param stopWords
+ * @returns {*}
+ */
+function removeStopWords(text, stopWords) {
+
+    stopWords = stopWords || DEFAULT_STOPWORDS;
+
+    stopWords.forEach(word => {
+        text = text.replace(word, '');
+    });
+
+    return text;
+}
+
+/**
  * Search the DataFox Companies Database for a specified company name.
  * @param name - The name of the company to search for.
  * @param ignoreCase - (default:true) Option to ignore case when matching string name.
@@ -27,11 +50,16 @@ function lookupCompanyName(name, ignoreCase, match) {
     // Trim quotes from search term
     name = trimQuotes(name);
 
+    // Remove Stop Words
+    name = removeStopWords(name);
+
+    console.error('NAME:', name);
+
     // Build a Regular Expression to search for name
     const regex = new RegExp(name, ignoreCase ? 'i' : '');
 
     // Function to test if a string matches the name regex
-    const matchName = text => util.isString(text) && regex.test(text);
+    const matchName = text => util.isString(text) && regex.test(removeStopWords(text));
 
     // Function to check if a company property matches the company name
     const matchProperty = (company, property) =>
