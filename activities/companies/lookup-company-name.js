@@ -31,7 +31,7 @@ function trimQuotes(text) {
  * @returns {Array|{index: number, input: string}|*}
  */
 function words (text) {
-    return text.match(/\w*\w/g);
+    return text.match(/\w*\w/g).join(' ');
 }
 
 /**
@@ -44,9 +44,7 @@ function removeStopWords(text, stopWords) {
 
     stopWords = stopWords || DEFAULT_STOPWORDS;
 
-    stopWords.forEach(word => {
-        text = text.replace(word, '');
-    });
+    stopWords.forEach(word => text = text.replace(word, ''));
 
     return text;
 }
@@ -65,13 +63,11 @@ function lookupCompanyName(name, ignoreCase, match) {
     // Remove Stop Words
     name = removeStopWords(name);
 
-    console.error('NAME:', name);
-
     // Build a Regular Expression to search for name
-    const regex = new RegExp(name, ignoreCase ? 'i' : '');
+    const regex = new RegExp(words(name), ignoreCase ? 'i' : '');
 
     // Function to test if a string matches the name regex
-    const matchName = text => util.isString(text) && regex.test(removeStopWords(text));
+    const matchName = text => util.isString(text) && regex.test(words(removeStopWords(text)));
 
     // Function to check if a company property matches the company name
     const matchProperty = (company, property) =>
