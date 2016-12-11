@@ -16,11 +16,23 @@ const util = require('util');
 const Activity = require('dataprocess').Activity;
 const DB = require('./db.json');
 
-// Function to trim quotations
-const trimQuotes = text => util.isString(text) ? text.replace(/['"]+/g, '') : text;
+/**
+ * Remove all instances of quotations in a string
+ * @param text
+ * @returns {void|XML|string|*}
+ */
+function trimQuotes(text) {
+    return util.isString(text) ? text.replace(/['"]+/g, '') : text;
+}
 
-// Function to split name into words
-const words = text => text.match(/\w*\w/g);
+/**
+ * Splits text into it's word components
+ * @param text
+ * @returns {Array|{index: number, input: string}|*}
+ */
+function words (text) {
+    return text.match(/\w*\w/g);
+}
 
 /**
  * Remove Stop Words
