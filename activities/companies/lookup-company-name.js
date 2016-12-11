@@ -22,7 +22,7 @@ function lookupCompanyName(name, ignoreCase, match) {
     const regex = new RegExp(name, ignoreCase ? 'i' : '');
 
     // Function to test if a string matches the name regex
-    const matchName = name => regex.test(name);
+    const matchName = name => util.isString(name) && regex.test(name);
 
     // Function to split name into words
     const words = text => text.match(/\w*\w/g);
@@ -30,8 +30,8 @@ function lookupCompanyName(name, ignoreCase, match) {
     // Function to check if a company property matches the company name
     const matchProperty = (company, property) =>
         util.isArray(company[property])
-            ? _.find(company[property], name => _.find(words(name), matchName))
-            : _.find(words(company[property]), matchName);
+            ? _.find(company[property], matchName(name))
+            : matchName(company[property]);
 
     // Function to check if any of the match properties contain the company name
     const matchCompany = company => _.any(match, property => matchProperty(company, property));
