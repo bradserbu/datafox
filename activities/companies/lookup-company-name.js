@@ -10,6 +10,12 @@ const util = require('util');
 const Activity = require('dataprocess').Activity;
 const DB = require('./db.json');
 
+// Function to trim quotations
+const trimQuotes = text => util.isString(text) ? text.replace(/['"]+/g, '') : text;
+
+// Function to split name into words
+const words = text => text.match(/\w*\w/g);
+
 /**
  * Search the DataFox Companies Database for a specified company name.
  * @param name - The name of the company to search for.
@@ -18,19 +24,19 @@ const DB = require('./db.json');
  */
 function lookupCompanyName(name, ignoreCase, match) {
 
+    // Trim quotes from search term
+    name = trimQuotes(name);
+
     // Build a Regular Expression to search for name
     const regex = new RegExp(name, ignoreCase ? 'i' : '');
 
     // Function to test if a string matches the name regex
-    const matchName = name => util.isString(name) && regex.test(name);
-
-    // Function to split name into words
-    const words = text => text.match(/\w*\w/g);
+    const matchName = text => util.isString(text) && regex.test(text);
 
     // Function to check if a company property matches the company name
     const matchProperty = (company, property) =>
         util.isArray(company[property])
-            ? _.find(company[property], matchName(name))
+            ? _.any(company[property], matchName)
             : matchName(company[property]);
 
     // Function to check if any of the match properties contain the company name
